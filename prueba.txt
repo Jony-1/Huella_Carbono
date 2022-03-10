@@ -1,0 +1,43 @@
+var sheetName ='sheet1'
+var scriptProp = PropertiesService.getScripProperties()
+
+fuction intialsetup (){
+	var activeSpreadsheet = SpreadsheeApp.getActiveSpeadsheet()
+	scriptProp.setProperty('Key', activeSpreadsheet.getId)
+}
+fuction doPost (e) {
+
+	var lock = Lockservice.getScripLock()
+	lock.tryLock(10000)
+
+	try{
+	var doc = SpreadsheeApp.openById(scrptProp.getProperty('key'))
+	var sheet = doc.getSheetByName(sheetName)
+
+	var header = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0]
+	var netRow = sheet.getLastRow() + 1
+
+	var newRow = headers.map(fuction.(header) {
+	return header == 'timestamp' ? new Date() : e.parameter[header]	
+	})
+
+	sheet.getRange(nexRow, 1, 1, newRow.length).setValues([newRow])
+
+	return ContentService
+		.createTextOutput(JSON.stringify({ 'result': 'success', 'row': nextRow}))
+		.setMimeType(contenService.MimeType.JSON)
+}
+
+catch (e) {
+	return ContenService
+	 .createTextOutput(JSON.stringify({ 'result': 'error', 'error': e}))
+  	 .setMimeType(contentService.MimeType.JSON)
+}
+
+finally {
+lock.releaseLock()
+
+}
+
+
+}

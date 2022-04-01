@@ -1,8 +1,8 @@
-print "Resultados de PyMySQL:"
+
 import pymysql
-miConexion = MySQLdb.connect( host='localhost:8081', user= 'root', passwd='', db='mydb', port='3306' )
+miConexion = MySQLdb.connect( host='localhost:8081', user= 'root', passwd='', db='mydb' )
 cur = miConexion.cursor()
-cur.execute( "SELECT nombre, apellido FROM usuarios" )
-for nombre, apellido in cur.fetchall() :
-    print nombre, apellido
+cur.execute( "SELECT Name FROM user" )
+for name in cur.fetchall() :
+    print name 
 miConexion.close()
